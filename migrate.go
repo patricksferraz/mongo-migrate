@@ -2,6 +2,7 @@
 package migrate
 
 import (
+	"github.com/globalsign/mgo/bson"
 	"log"
 	"time"
 
@@ -99,6 +100,22 @@ func (m *Migrate) Version() (uint64, string, error) {
 	return rec.Version, rec.Description, nil
 }
 
+// Applied check if version was applied
+func (m *Migrate) Applied(version uint64) bool {
+	if err := m.createCollectionIfNotExist(m.migrationsCollection); err != nil {
+		return false
+	}
+	var rec versionRecord
+	err := m.db.C(m.migrationsCollection).Find(bson.M{"version": version}).One(&rec)
+	if err == mgo.ErrNotFound {
+		return false
+	}
+	if err != nil {
+		return false
+	}
+	return true
+}
+
 // SetVersion forcibly changes database version to provided.
 func (m *Migrate) SetVersion(version uint64, description string) error {
 	return m.db.C(m.migrationsCollection).Insert(versionRecord{
@@ -112,10 +129,6 @@ func (m *Migrate) SetVersion(version uint64, description string) error {
 // If n<=0 all "up" migrations with newer versions will be performed.
 // If n>0 only n migrations with newer version will be performed.
 func (m *Migrate) Up(n int) error {
-	currentVersion, _, err := m.Version()
-	if err != nil {
-		return err
-	}
 	if n <= 0 || n > len(m.migrations) {
 		n = len(m.migrations)
 	}
@@ -123,7 +136,7 @@ func (m *Migrate) Up(n int) error {
 
 	for i, p := 0, 0; i < len(m.migrations) && p < n; i++ {
 		migration := m.migrations[i]
-		if migration.Version <= currentVersion || migration.Up == nil {
+		if m.Applied(migration.Version) || migration.Up == nil {
 			continue
 		}
 		p++
