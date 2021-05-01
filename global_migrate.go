@@ -5,7 +5,7 @@ import (
 	"log"
 	"runtime"
 
-	"github.com/globalsign/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 var globalMigrate = NewMigrate(nil)
@@ -37,7 +37,7 @@ func internalRegister(up, down MigrationFunc, skip int) error {
 //
 // 	package migrations
 // 	import (
-// 		"github.com/globalsign/mgo"
+// 		"gopkg.in/mgo.v2"
 //		"github.com/xakep666/mongo-migrate"
 // 	)
 //

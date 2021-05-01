@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
+	"gopkg.in/mgo.v2"
 )
 
 const testCollection = "test"
