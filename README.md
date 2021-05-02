@@ -12,13 +12,15 @@ Inspired by [go-pg migrations](https://github.com/go-pg/migrations).
 Table of Contents
 =================
 
-* [Prerequisites](#prerequisites)
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Use case \#1\. Migrations in files\.](#use-case-1-migrations-in-files)
-  * [Use case \#2\. Migrations in application code\.](#use-case-2-migrations-in-application-code)
-* [How it works?](#how-it-works)
-* [License](#license)
+- [Versioned migrations for MongoDB](#versioned-migrations-for-mongodb)
+- [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Use case #1. Migrations in files.](#use-case-1-migrations-in-files)
+    - [Use case #2. Migrations in application code.](#use-case-2-migrations-in-application-code)
+  - [How it works?](#how-it-works)
+  - [License](#license)
 
 ## Prerequisites
 * Golang >= 1.10 or Vgo
@@ -40,8 +42,8 @@ File name should be like `<version>_<description>.go`.
 package migrations
 
 import (
-	"github.com/globalsign/mgo"
-	"github.com/globalsign/mgo/bson"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 	migrate "github.com/xakep666/mongo-migrate"
 )
 

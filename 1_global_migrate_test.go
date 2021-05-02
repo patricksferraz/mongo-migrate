@@ -3,7 +3,7 @@ package migrate
 import (
 	"testing"
 
-	"github.com/globalsign/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 func TestGlobalMigrateSetGet(t *testing.T) {

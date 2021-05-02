@@ -3,7 +3,7 @@
 package migrate
 
 import (
-	"github.com/globalsign/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 const globalTestIndexName = "test_idx_2"
