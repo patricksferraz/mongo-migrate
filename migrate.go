@@ -161,6 +161,9 @@ func (m *Migrate) Up(n int) error {
 // If n>0 only n migrations with older version will be performed.
 func (m *Migrate) Down(n int) error {
 	currentVersion, _, err := m.Version()
+	if currentVersion == 0 {
+		return nil
+	}
 	if err != nil {
 		return err
 	}
